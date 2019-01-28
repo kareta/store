@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import ProductGrid from './ProductGrid';
+import ProductGrid from './components/ProductGrid';
 import {Switch} from "react-router-dom";
 import Route from "react-router-dom/es/Route";
-import ProductEditor from "./ProductEditor";
+import ProductEditor from "./components/ProductEditor";
 import { Provider } from 'react-redux';
 import store from './store';
 import 'bootstrap/dist/css/bootstrap.min.css';
