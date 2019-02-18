@@ -2,12 +2,13 @@ import React, {Component} from 'react';
 import uuid from "uuid";
 import {connect} from "react-redux";
 import PropTypes  from 'prop-types';
-import {addProduct, updateProduct} from "../actions/productActions";
+import {addProduct, deleteProduct, updateProduct} from "../actions/productActions";
+import ProductEditorDeleteButton from "./ProductEditorDeleteButton";
 
 class ProductEditor extends Component {
   state = {
-    name: null,
-    price: null,
+    name: '',
+    price: '',
   };
 
   onSubmit = event => {
@@ -30,6 +31,11 @@ class ProductEditor extends Component {
     this.props.history.push('/');
   };
 
+  onDelete = () => {
+    this.props.deleteProduct(this.props.match.params.id);
+    this.props.history.push('/');
+  };
+
   onChange = event => this.setState({ [event.target.name]: event.target.value });
 
   initializeForm() {
@@ -49,6 +55,12 @@ class ProductEditor extends Component {
 
   render() {
     const id = this.props.match.params.id;
+
+    let deleteButton = null;
+    if (this.props.match.params.id !== 'new') {
+      deleteButton = <ProductEditorDeleteButton onClick={this.onDelete} />;
+    }
+
     return (
       <div>
         <h3>{ id === 'new' ? 'Create a new product' : 'Edit the product' }</h3>
@@ -76,11 +88,10 @@ class ProductEditor extends Component {
               onChange={this.onChange}
             />
           </div>
-          <div className="form-group">
-            <button className="btn btn-success">
-              Save
-            </button>
-          </div>
+          <button type="submit" className="btn btn-success">
+            Save
+          </button>
+          {deleteButton}
         </form>
       </div>
     );
@@ -104,5 +115,5 @@ const mapStateToProps = (state, ownProps) => {
 
 export default connect(
   mapStateToProps,
-  { addProduct, updateProduct }
+  { addProduct, updateProduct, deleteProduct }
 )(ProductEditor);
