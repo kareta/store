@@ -1,4 +1,4 @@
-import {ADD_PRODUCT} from "../actions/types";
+import {ADD_PRODUCT, UPDATE_PRODUCT} from "../actions/types";
 
 const initialState = {
   products: [
@@ -26,6 +26,14 @@ export default function (state = initialState, action) {
       return {
         ...state,
         products: [action.payload, ...state.products],
+      };
+    case UPDATE_PRODUCT:
+      return {
+        ...state,
+        products: state.products.map(
+          product => product.id !== action.payload.id
+            ? product : (product = action.payload)
+        ),
       };
     default:
       return state;

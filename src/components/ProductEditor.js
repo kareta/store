@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import uuid from "uuid";
 import {connect} from "react-redux";
 import PropTypes  from 'prop-types';
-import {addProduct} from "../actions/productActions";
+import {addProduct, updateProduct} from "../actions/productActions";
 
 class ProductEditor extends Component {
   state = {
@@ -13,15 +13,19 @@ class ProductEditor extends Component {
   onSubmit = event => {
     event.preventDefault();
 
-    const { name, price } = this.state;
+    const id = this.props.match.params.id;
 
     const product = {
-      id: uuid(),
-      name,
-      price
+      id: id === 'new' ? uuid() : this.props.product.id,
+      name: this.state.name,
+      price: this.state.price,
     };
 
-    this.props.addProduct(product);
+    if (id === 'new') {
+      this.props.addProduct(product);
+    } else {
+      this.props.updateProduct(product);
+    }
 
     this.props.history.push('/');
   };
@@ -98,4 +102,7 @@ const mapStateToProps = (state, ownProps) => {
   return { product };
 };
 
-export default connect(mapStateToProps, { addProduct })(ProductEditor);
+export default connect(
+  mapStateToProps,
+  { addProduct, updateProduct }
+)(ProductEditor);
