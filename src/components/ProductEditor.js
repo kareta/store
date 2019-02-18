@@ -28,6 +28,21 @@ class ProductEditor extends Component {
 
   onChange = event => this.setState({ [event.target.name]: event.target.value });
 
+  initializeForm() {
+    if (!this.props.product) {
+      return;
+    }
+
+    this.setState({
+      name: this.props.product.name,
+      price: this.props.product.price,
+    });
+  }
+
+  componentDidMount() {
+    this.initializeForm();
+  }
+
   render() {
     const id = this.props.match.params.id;
     return (
@@ -41,6 +56,7 @@ class ProductEditor extends Component {
               name="name"
               type="text"
               className="form-control"
+              value={this.state.name}
               onChange={this.onChange}
             />
           </div>
@@ -52,6 +68,7 @@ class ProductEditor extends Component {
               min="1"
               step="any"
               className="form-control"
+              value={this.state.price}
               onChange={this.onChange}
             />
           </div>
@@ -68,6 +85,17 @@ class ProductEditor extends Component {
 
 ProductEditor.propTypes = {
   addProduct: PropTypes.func.isRequired,
+  product: PropTypes.object.isRequired,
 };
 
-export default connect(null, { addProduct })(ProductEditor);
+const mapStateToProps = (state, ownProps) => {
+  let product = null;
+  if (ownProps.match.params.id !== 'new') {
+    const products = state.product.products;
+    const id = ownProps.match.params.id;
+    product = products.find(product => product.id === id);
+  }
+  return { product };
+};
+
+export default connect(mapStateToProps, { addProduct })(ProductEditor);
