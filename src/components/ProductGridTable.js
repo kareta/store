@@ -3,6 +3,7 @@ import ProductGridTableRow from "./ProductGridTableRow";
 
 const ProductGridTable = ({ products }) => (
   <table className="table">
+    <thead>
     <tr>
       <th>
         Name
@@ -11,7 +12,10 @@ const ProductGridTable = ({ products }) => (
         Price
       </th>
     </tr>
-    {products.map(product => <ProductGridTableRow product={product}/>)}
+    </thead>
+    <tbody>
+    {products.map(product => <ProductGridTableRow product={product} key={product.id}/>)}
+    </tbody>
   </table>
 );
 
