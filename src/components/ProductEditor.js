@@ -4,11 +4,13 @@ import {connect} from "react-redux";
 import PropTypes  from 'prop-types';
 import {addProduct, deleteProduct, updateProduct} from "../actions/productActions";
 import ProductEditorDeleteButton from "./ProductEditorDeleteButton";
+import ImageInput from "./ImageInput";
 
 class ProductEditor extends Component {
   state = {
     name: '',
     price: '',
+    image: '',
   };
 
   onSubmit = event => {
@@ -20,6 +22,7 @@ class ProductEditor extends Component {
       id: id === 'new' ? uuid() : this.props.product.id,
       name: this.state.name,
       price: this.state.price,
+      image: this.state.image,
     };
 
     if (id === 'new') {
@@ -38,6 +41,8 @@ class ProductEditor extends Component {
 
   onChange = event => this.setState({ [event.target.name]: event.target.value });
 
+  onImageUpload = image => this.setState({ image });
+
   initializeForm() {
     if (!this.props.product) {
       return;
@@ -46,6 +51,7 @@ class ProductEditor extends Component {
     this.setState({
       name: this.props.product.name,
       price: this.props.product.price,
+      image: this.props.product.image,
     });
   }
 
@@ -88,6 +94,7 @@ class ProductEditor extends Component {
               onChange={this.onChange}
             />
           </div>
+          <ImageInput image={this.state.image} onUpload={this.onImageUpload}/>
           <button type="submit" className="btn btn-success">
             Save
           </button>
@@ -100,7 +107,7 @@ class ProductEditor extends Component {
 
 ProductEditor.propTypes = {
   addProduct: PropTypes.func.isRequired,
-  product: PropTypes.object.isRequired,
+  product: PropTypes.object,
 };
 
 const mapStateToProps = (state, ownProps) => {
