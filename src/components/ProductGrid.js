@@ -10,6 +10,7 @@ class ProductGrid extends React.Component {
 
     return (
       <div className="container">
+        <h3>Products</h3>
         <Link to="products/new">
           <button className="btn btn-success">Add</button>
         </Link>

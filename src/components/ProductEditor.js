@@ -68,7 +68,7 @@ class ProductEditor extends Component {
     }
 
     return (
-      <div>
+      <div className="container">
         <h3>{ id === 'new' ? 'Create a new product' : 'Edit the product' }</h3>
 
         <form className="col-md-6" onSubmit={this.onSubmit}>
