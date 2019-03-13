@@ -5,14 +5,21 @@ import { connect } from 'react-redux';
 import PropTypes  from 'prop-types';
 import { Link } from "react-router-dom";
 import { setProductPage } from "../actions/productActions";
+import * as qs from "qs";
 
 class ProductGrid extends React.Component {
 
   componentDidMount() {
-    this.props.setProductPage(0);
+    const query = qs.parse(this.props.location.search, { ignoreQueryPrefix: true });
+    const page = query.page ? Number(query.page) : 0;
+    this.props.setProductPage(page);
   }
 
   onPageClick = ({ selected }) => {
+    this.props.history.push({
+      pathname: '',
+      search: '?page=' + selected
+    });
     this.props.setProductPage(selected);
   };
 

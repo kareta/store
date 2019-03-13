@@ -11,6 +11,7 @@
     "popper": "^1.0.1",
     "popper.js": "^1.14.7",
     "prop-types": "latest",
+    "qs": "^6.6.0",
     "react": "^16.8.3",
     "react-burger-menu": "^2.6.5",
     "react-dom": "^16.7.0",
