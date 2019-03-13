@@ -1,18 +1,19 @@
 import React from 'react';
 import ProductGridTable from "./ProductGridTable";
 import Pagination from './Pagination';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import PropTypes  from 'prop-types';
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
+import { setProductPage } from "../actions/productActions";
 
 class ProductGrid extends React.Component {
 
-  state = {
-    pageCount: 15,
-  };
+  componentDidMount() {
+    this.props.setProductPage(0);
+  }
 
-  onPageClick = () => {
-
+  onPageClick = ({ selected }) => {
+    this.props.setProductPage(selected);
   };
 
   render() {
@@ -28,7 +29,7 @@ class ProductGrid extends React.Component {
         </div>
         <ProductGridTable products={products}/>
         <Pagination
-          pageCount={this.state.pageCount}
+          pageCount={this.props.pageCount}
           onPageClick={this.onPageClick}
         />
       </div>
@@ -41,7 +42,13 @@ ProductGrid.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  products: state.product.products,
+  products: state.product.page.map(
+    id => state.product.products.find(product => product.id === id)
+  ),
+  pageCount: state.product.products.length / state.product.perPage,
 });
 
-export default connect(mapStateToProps)(ProductGrid);
+export default connect(
+  mapStateToProps,
+  { setProductPage }
+)(ProductGrid);

@@ -1,7 +1,9 @@
-import {ADD_PRODUCT, DELETE_PRODUCT, UPDATE_PRODUCT} from "../actions/types";
+import {ADD_PRODUCT, DELETE_PRODUCT, SET_PRODUCT_PAGE, UPDATE_PRODUCT} from "../actions/types";
 
 const initialState = {
   products: [],
+  page: [],
+  perPage: 15,
 };
 
 for (let i = 0; i < 100; i++) {
@@ -32,6 +34,11 @@ export default function (state = initialState, action) {
         ...state,
         products: state.products.filter(product => product.id !== action.payload),
       };
+    case SET_PRODUCT_PAGE:
+      const start = action.payload > 0 ? action.payload * state.perPage : 0;
+      const end = start + state.perPage;
+      const page = state.products.slice(start, end).map(product => product.id);
+      return { ...state, page };
     default:
       return state;
   }
