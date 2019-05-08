@@ -1,7 +1,7 @@
-const Joi = require('joi');
 const express = require('express');
 const router = express.Router();
 const db = require('../models');
+const validateProduct = require('../validators/product');
 
 router.get('/', async (request, response) => {
     const products = await db.products.findAll();
@@ -27,7 +27,6 @@ router.post('/', async (request, response) => {
     }
 
     const product = {
-        id: products.length + 1,
         name: request.body.name,
         price: request.body.price,
     };
@@ -72,13 +71,5 @@ router.delete('/:id', async (request, response) => {
 
     response.send(product);
 });
-
-function validateProduct(product) {
-    const schema = {
-        name: Joi.string().min(3).required(),
-        price: Joi.number().positive().required(),
-    };
-    return Joi.validate(product, schema);
-}
 
 module.exports = router;
