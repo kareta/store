@@ -1,33 +1,16 @@
 const Joi = require('joi');
 const express = require('express');
 const router = express.Router();
+const db = require('../models');
 
-const products = [
-    {
-        id: 1,
-        name: 'Boots',
-        price: 1099,
-    },
-    {
-        id: 2,
-        name: 'Sneakers',
-        price: 1099,
-    },
-    {
-        id: 2,
-        name: 'Shoes',
-        price: 1099,
-    },
-];
-
-router.get('/', (request, response) => {
+router.get('/', async (request, response) => {
+    const products = await db.products.findAll();
     response.send(products);
 });
 
-router.get('/:id', (request, response) => {
-    const product = products.find(
-        product => product.id === parseInt(request.params.id)
-    );
+router.get('/:id', async (request, response) => {
+    const id = parseInt(request.params.id);
+    const product = await db.products.findByPk(id);
 
     if (!product) {
         response.status(404);
@@ -37,7 +20,7 @@ router.get('/:id', (request, response) => {
     response.send(product);
 });
 
-router.post('/', (request, response) => {
+router.post('/', async (request, response) => {
     const { error } = validateProduct(request.body);
     if (error) {
         return response.status(400).send(error.details[0].message);
@@ -48,14 +31,13 @@ router.post('/', (request, response) => {
         name: request.body.name,
         price: request.body.price,
     };
-    products.push(product);
+    await db.products.create(product);
     response.send(product);
 });
 
-router.put('/:id', (request, response) => {
-    const product = products.find(
-        product => product.id === parseInt(request.params.id)
-    );
+router.put('/:id', async (request, response) => {
+    const id = parseInt(request.params.id);
+    const product = await db.products.findByPk(id);
 
     if (!product) {
         response.status(404);
@@ -67,22 +49,26 @@ router.put('/:id', (request, response) => {
         return response.status(400).send(error.details[0].message);
     }
 
-    product.name = request.body.name;
-    product.price = request.body.price;
+    await db.products.update({
+        name: request.body.name,
+        price: request.body.price,
+    }, {
+        where: { id },
+    });
+
     response.send(product);
 });
 
-router.delete('/:id', (request, response) => {
-    const product = products.find(
-        product => product.id === parseInt(request.params.id)
-    );
+router.delete('/:id', async (request, response) => {
+    const id = parseInt(request.params.id);
+    const product = await db.products.findByPk(id);
+
     if (!product) {
         response.status(404);
         return response.send('The product with the id does not exist');
     }
 
-    const index = products.indexOf(product);
-    products.splice(index, 1);
+    await db.products.destroy({ where: { id } });
 
     response.send(product);
 });
