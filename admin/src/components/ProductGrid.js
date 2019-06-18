@@ -4,7 +4,7 @@ import Pagination from './Pagination';
 import { connect } from 'react-redux';
 import PropTypes  from 'prop-types';
 import { Link } from "react-router-dom";
-import { setProductPage } from "../actions/productActions";
+import { setProductPage, fetchProducts } from "../actions/productActions";
 import * as qs from "qs";
 
 class ProductGrid extends React.Component {
@@ -13,6 +13,7 @@ class ProductGrid extends React.Component {
     const query = qs.parse(this.props.location.search, { ignoreQueryPrefix: true });
     const page = query.page ? Number(query.page) : 0;
     this.props.setProductPage(page);
+    this.props.fetchProducts();
   }
 
   onPageClick = ({ selected }) => {
@@ -57,5 +58,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { setProductPage }
+  { setProductPage, fetchProducts }
 )(ProductGrid);

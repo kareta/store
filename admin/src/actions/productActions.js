@@ -1,4 +1,5 @@
-import {ADD_PRODUCT, DELETE_PRODUCT, SET_PRODUCT_PAGE, UPDATE_PRODUCT} from './types';
+import {ADD_PRODUCT, DELETE_PRODUCT, RECEIVE_PRODUCTS, SET_PRODUCT_PAGE, UPDATE_PRODUCT} from './types';
+import axios from 'axios';
 
 export const addProduct = product => {
   return {
@@ -26,4 +27,18 @@ export const setProductPage = page => {
     type: SET_PRODUCT_PAGE,
     payload: page,
   };
+};
+
+export const fetchProducts = () => dispatch => {
+    return axios.get('http://localhost:3001/api/products').then(res => {
+        dispatch(receiveProducts(res.data));
+        dispatch(setProductPage(1));
+    });
+};
+
+export const receiveProducts = (json) => {
+    return {
+        type: RECEIVE_PRODUCTS,
+        payload: json,
+    };
 };
