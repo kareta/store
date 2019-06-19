@@ -4,8 +4,17 @@ const db = require('../models');
 const validateProduct = require('../validators/product');
 
 router.get('/', async (request, response) => {
-    const products = await db.products.findAll();
-    response.send(products);
+    db.products.findAndCountAll().then(({ count }) => {
+        let page = request.query.page;
+        page = (page && page > 1) ? page : 1;
+        const limit = request.query.perpage || 20;
+        const offset = limit * (page - 1);
+
+        db.products.findAll({ limit, offset }).then(result => {
+            const pages = Math.ceil(count / limit);
+            response.send({ result, count, pages });
+        });
+    });
 });
 
 router.get('/:id', async (request, response) => {
