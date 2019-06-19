@@ -5,7 +5,7 @@ module.exports = {
         const products = [];
         for (let i = 0; i < 1000; i++) {
             const product = {
-                name: 'Shoes',
+                name: 'Shoes' + i,
                 price: 10000,
                 createdAt : new Date(),
                 updatedAt : new Date(),

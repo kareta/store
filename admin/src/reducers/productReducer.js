@@ -1,19 +1,27 @@
-import {ADD_PRODUCT, DELETE_PRODUCT, RECEIVE_PRODUCTS, SET_PRODUCT_PAGE, UPDATE_PRODUCT} from "../actions/types";
+import {
+  ADD_PRODUCT,
+  DELETE_PRODUCT,
+  RECEIVE_PRODUCT_PAGE,
+  SET_PRODUCT_PAGE,
+  UPDATE_PRODUCT
+} from "../actions/types";
+import _ from 'lodash';
 
 const initialState = {
   products: [],
   page: [],
-  perPage: 15,
+  pageCount: 1,
 };
 
 export default function (state = initialState, action) {
   switch (action.type) {
-    case ADD_PRODUCT:
+    case ADD_PRODUCT: {
       return {
         ...state,
         products: [action.payload, ...state.products],
       };
-    case UPDATE_PRODUCT:
+    }
+    case UPDATE_PRODUCT: {
       return {
         ...state,
         products: state.products.map(
@@ -21,18 +29,25 @@ export default function (state = initialState, action) {
             ? product : (product = action.payload)
         ),
       };
-    case DELETE_PRODUCT:
+    }
+    case DELETE_PRODUCT: {
       return {
         ...state,
         products: state.products.filter(product => product.id !== action.payload),
       };
-    case SET_PRODUCT_PAGE:
+    }
+    case SET_PRODUCT_PAGE: {
       const start = action.payload > 1 ? (action.payload - 1) * state.perPage : 0;
       const end = start + state.perPage;
       const page = state.products.slice(start, end).map(product => product.id);
       return { ...state, page };
-    case RECEIVE_PRODUCTS:
-      return { ...state, products: action.payload };
+    }
+    case RECEIVE_PRODUCT_PAGE: {
+      const products = _.unionBy(state.products, action.payload.products, 'id');
+      const pageCount = action.payload.pageCount;
+      const page = action.payload.products.map(product => product.id);
+      return { ...state, products, pageCount, page };
+    }
     default:
       return state;
   }
