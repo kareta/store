@@ -2,8 +2,9 @@ const express = require('express');
 const router = express.Router();
 const db = require('../models');
 const validateProduct = require('../validators/product');
+const auth = require('../middleware/auth');
 
-router.get('/', async (request, response) => {
+router.get('/', auth, async (request, response) => {
     db.products.findAndCountAll().then(({ count }) => {
         let page = request.query.page;
         page = (page && page > 1) ? page : 1;
@@ -17,7 +18,7 @@ router.get('/', async (request, response) => {
     });
 });
 
-router.get('/:id', async (request, response) => {
+router.get('/:id', auth, async (request, response) => {
     const id = parseInt(request.params.id);
     const product = await db.products.findByPk(id);
 
@@ -29,7 +30,7 @@ router.get('/:id', async (request, response) => {
     response.send(product);
 });
 
-router.post('/', async (request, response) => {
+router.post('/', auth, async (request, response) => {
     const { error } = validateProduct(request.body);
     if (error) {
         return response.status(400).send(error.details[0].message);
@@ -43,7 +44,7 @@ router.post('/', async (request, response) => {
     response.send(product);
 });
 
-router.put('/:id', async (request, response) => {
+router.put('/:id', auth, async (request, response) => {
     const id = parseInt(request.params.id);
     const product = await db.products.findByPk(id);
 
@@ -67,7 +68,7 @@ router.put('/:id', async (request, response) => {
     response.send(product);
 });
 
-router.delete('/:id', async (request, response) => {
+router.delete('/:id', auth, async (request, response) => {
     const id = parseInt(request.params.id);
     const product = await db.products.findByPk(id);
 
