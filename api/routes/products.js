@@ -4,7 +4,7 @@ const db = require('../models');
 const validateProduct = require('../validators/product');
 const auth = require('../middleware/auth');
 
-router.get('/', auth, async (request, response) => {
+router.get('/', async (request, response) => {
     db.products.findAndCountAll().then(({ count }) => {
         let page = request.query.page;
         page = (page && page > 1) ? page : 1;
@@ -18,7 +18,7 @@ router.get('/', auth, async (request, response) => {
     });
 });
 
-router.get('/:id', auth, async (request, response) => {
+router.get('/:id', async (request, response) => {
     const id = parseInt(request.params.id);
     const product = await db.products.findByPk(id);
 
