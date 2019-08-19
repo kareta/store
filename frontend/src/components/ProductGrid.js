@@ -3,6 +3,7 @@ import {fetchProductPage, setProductPage} from "../actions/productActions";
 import {connect} from 'react-redux';
 import PropTypes  from 'prop-types';
 import * as qs from "qs";
+import ProductCell from "./ProductCell";
 
 class ProductGrid extends Component {
 
@@ -13,14 +14,18 @@ class ProductGrid extends Component {
   }
 
   render() {
-    const products = this.props.products.map(
-      product => <li key={product.id}>{ product.name } - { product.price }</li>
+    const products = this.props.products.map(product =>
+      <div key={product.id} className="col-sm-6 col-md-4 col-lg-3">
+        <ProductCell product={product} />
+      </div>
     );
 
     return (
-      <ul className="list-unstyled">
-        {products}
-      </ul>
+      <div className="container">
+        <div className="row">
+          {products}
+        </div>
+      </div>
     );
   }
 }
