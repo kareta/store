@@ -3,13 +3,14 @@ import {Switch} from 'react-router-dom';
 import Route from 'react-router-dom/es/Route';
 import { Provider } from 'react-redux';
 import store from './store';
+import ProductGrid from './components/ProductGrid';
+import Header from './components/Header';
 
 //Bootstrap dependencies
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'jquery/dist/jquery.min';
 import 'popper.js/dist/popper.min';
 import 'bootstrap/dist/js/bootstrap.min';
-import ProductGrid from "./components/ProductGrid";
 
 class App extends Component {
 
@@ -17,6 +18,7 @@ class App extends Component {
 
     return (
       <Provider store={store}>
+        <Header />
         <Switch>
           <Route exact path='/' component={ProductGrid}/>
         </Switch>
