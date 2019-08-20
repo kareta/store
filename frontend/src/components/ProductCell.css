@@ -6,10 +6,6 @@
     border-radius: 5px;
 }
 
-.ProductCell.product-card:hover {
-    border: 1px #aaaaaa solid;
-}
-
 .ProductCell .thumbnail-wrapper {
     position: relative;
     height: 200px;
@@ -32,7 +28,8 @@
 .ProductCell .product-card-info-buy-button {
     display: inline-block;
     padding: 0 3px;
-    border: 1px solid #fff;
+    border: 1px solid black;
+    cursor: pointer;
 }
 
 .ProductCell .product-card-info-buy-button:hover {
@@ -42,24 +39,20 @@
 
 .ProductCell .product-card-info-price {
     display: inline-block;
-    padding: 0 3px;
+    margin-right: 10px;
 }
 
 .ProductCell .size-picker {
-    display: flex;
-    margin: 3px 0;
+    margin-top: 5px;
+    font-size: 13px;
 }
 
 .ProductCell .size {
     width: 28px;
     height: 25px;
-    margin-right: 5px;
-    border: 1px solid;
-    border-radius: 5px;
+    margin-left: 3px;
     text-align: center;
     cursor: pointer;
-}
-
-.ProductCell .size.selected {
-    background: #e1e1e1;
+    border-bottom: 1px solid #000;
+    padding-bottom: 1px
 }

@@ -19,7 +19,8 @@ export default function (state = initialState, action) {
       return { ...state, page };
     }
     case RECEIVE_PRODUCT_PAGE: {
-      const products = _.unionBy(state.products, action.payload.products, 'id');
+      const products = _.unionBy(state.products, action.payload.products, 'id')
+        .map(product => ({...product, sizes: [40, 41, 42, 43, 44, 45]}));
       const pageCount = action.payload.pageCount;
       const page = action.payload.products.map(product => product.id);
       return { ...state, products, pageCount, page };
