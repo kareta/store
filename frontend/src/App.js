@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 import store from './store';
 import ProductGrid from './components/ProductGrid';
 import Header from './components/Header';
+import Footer from "./components/Footer";
 
 //Bootstrap dependencies
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -22,6 +23,7 @@ class App extends Component {
         <Switch>
           <Route exact path='/' component={ProductGrid}/>
         </Switch>
+        <Footer />
       </Provider>
     );
   }
