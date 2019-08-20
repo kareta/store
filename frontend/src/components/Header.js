@@ -1,12 +1,13 @@
 import React, {Component} from 'react';
 import {faShoppingCart} from "@fortawesome/free-solid-svg-icons/faShoppingCart";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import './Header.css';
 
 class Header extends Component {
   render() {
     return (
-      <div>
-        <div className="bg-light container-fluid the-header">
+      <div className="Header">
+        <div className="container-fluid">
           <nav className="navbar navbar-expand-md navbar-light">
             <a className="navbar-brand" href="/">
               Обувь

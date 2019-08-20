@@ -4,9 +4,9 @@ import './Footer.css';
 class Footer extends Component {
   render() {
     return (
-      <footer className="footer">
+      <footer className="Footer">
         <div className="container text-center">
-            <span className="text-muted">
+            <span className="copyright text-muted">
                 &copy; {new Date().getFullYear()}, Обувь
             </span>
         </div>

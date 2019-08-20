@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import PropTypes  from 'prop-types';
 import * as qs from "qs";
 import ProductCell from "./ProductCell";
+import Pagination from "../components/Pagination";
 
 class ProductGrid extends Component {
 
@@ -12,6 +13,17 @@ class ProductGrid extends Component {
     const page = query.page ? Number(query.page) : 1;
     this.props.fetchProductPage(page);
   }
+
+  onPageClick = ({ selected }) => {
+    const page = Number(selected) + 1;
+    this.props.history.push({
+      pathname: '',
+      search: '?page=' + page
+    });
+    this.props.fetchProductPage(page);
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   render() {
     const products = this.props.products.map(product =>
@@ -25,6 +37,10 @@ class ProductGrid extends Component {
         <div className="row">
           {products}
         </div>
+        <Pagination
+          pageCount={this.props.pageCount}
+          onPageClick={this.onPageClick}
+        />
       </div>
     );
   }

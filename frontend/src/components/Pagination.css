@@ -1,0 +1,20 @@
+.pagination {
+    margin-top: 20px;
+    flex-wrap: wrap;
+    text-align: center;
+    justify-content: center;
+}
+
+.pagination .page-item {
+    cursor: pointer;
+}
+
+.pagination .page-link, .page-link a {
+    color: black;
+}
+
+.pagination .active.page-item .page-link {
+    background: #f1f1f1;
+    color: black;
+    border-color: #dee2e6;
+}
