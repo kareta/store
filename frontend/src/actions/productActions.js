@@ -9,7 +9,7 @@ export const setProductPage = page => {
 };
 
 export const fetchProductPage = page => dispatch => {
-  const url = `http://localhost:3001/api/products?page=${page}`;
+  const url = `/products?page=${page}`;
   return axios.get(url).then(res => {
     const payload = {
       products: res.data.result,
