@@ -15,7 +15,7 @@
     "popper": "^1.0.1",
     "popper.js": "^1.14.7",
     "prop-types": "latest",
-    "qs": "^6.6.0",
+    "qs": "^6.7.3",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
     "react-paginate": "^6.3.0",
